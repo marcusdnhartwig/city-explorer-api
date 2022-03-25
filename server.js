@@ -6,11 +6,7 @@ console.log('Our first server');
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const weatherData = require('./data/weather.json');
-const { request, response } = require('express');
 require('dotenv').config();
-
-console.log(weatherData);
 
 // USE
 // we must include cors if we want to share reessourcess over the web
@@ -26,7 +22,7 @@ const PORT = process.env.PORT || 3002;
 app.get('/weather', async (request, response, next) => {
   try {
     let city = request.query.city;
-    let url = (`https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=US&key=${process.env.WEATHER_API_KEY}`);
+    let url = (`https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=US&key=${process.env.WEATHER_API_KEY}&units=I&days=7`);
     let cityWeather = await axios.get(url);
     let weatherDisplay = [];
 
@@ -40,7 +36,7 @@ app.get('/weather', async (request, response, next) => {
   }
 });
 
-app.get('/movies', async (request, response, next) => {
+app.get('/movie', async (request, response, next) => {
   try {
     let city = request.query.city;
     // console.log(city);
@@ -86,10 +82,7 @@ class Movie {
     this.description = element.overview;
     this.laguage = element.original_language;
     this.tagline = element.tagline;
-    let parsedMovies = [];
-    element.results.forEach(movie =>
-        
-    );
+    this.imageUrl = element.poster_path;
   }
 }
 
